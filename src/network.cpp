@@ -161,22 +161,21 @@ std::set<size_t> Network::step(const std::vector<double>& in){
 			neurons[n].reset();
 		}
 	}
-		for (size_t n(0);n<neurons.size(); n++){
-			if (neurons[n].is_inhibitory()){
-			w=0.4;
-			}
-			else w=1;
-			for (auto f : neighbors(n)){
-				if (res.count(f.first)==1){
-					if (neurons[f.first].is_inhibitory()){
-						inhi+=f.second;
-					}
-					else {
-						ex+=f.second;
-					}
+	for (size_t n(0);n<neurons.size(); n++){
+		if (neurons[n].is_inhibitory()){
+		w=0.4;
+		}
+		else w=1;
+		for (auto f : neighbors(n)){
+			if (res.count(f.first)==1){
+				if (neurons[f.first].is_inhibitory()){
+					inhi+=f.second;
+				}
+				else {
+					ex+=f.second;
 				}
 			}
-			
+		}
 		double input=(w*in[n]+0.5*ex+inhi);
 		neurons[n].input(input);
 		ex=0.0;
